@@ -6,11 +6,13 @@
 /*   By: mmoussou <mmoussou@student.42angouleme.fr  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 08:10:51 by mmoussou          #+#    #+#             */
-/*   Updated: 2024/01/22 11:50:49 by mmoussou         ###   ########.fr       */
+/*   Updated: 2024/01/22 13:01:40 by mmoussou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
+
+static char	g_uwu_g;
 
 int	check_pid(const char *str)
 {
@@ -42,12 +44,22 @@ void	send_char(char c, int pid)
 	}
 }
 
+void	ft_exit(int signum)
+{
+	if (signum == SIGUSR1)
+	{
+		ft_printf("uwu :3");
+		g_uwu_g = 0;
+	}
+}
+
 int	main(int argc, char **argv)
 {
-	char	**msg;
 	int		pid;
 	int		i;
 
+	g_uwu_g = 17;
+	signal(SIGUSR1, ft_exit);
 	if (argc != 3)
 		return (-1);
 	if (check_pid(argv[1]))
@@ -61,4 +73,6 @@ int	main(int argc, char **argv)
 		i++;
 	}
 	send_char(0, pid);
+	while (g_uwu_g)
+		;
 }
