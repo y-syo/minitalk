@@ -6,7 +6,7 @@
 /*   By: mmoussou <mmoussou@student.42angouleme.fr  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 08:10:51 by mmoussou          #+#    #+#             */
-/*   Updated: 2024/01/22 11:24:17 by mmoussou         ###   ########.fr       */
+/*   Updated: 2024/01/22 11:50:49 by mmoussou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ int	main(int argc, char **argv)
 	char	**msg;
 	int		pid;
 	int		i;
-	int		j;
 
 	if (argc != 3)
 		return (-1);
