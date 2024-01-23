@@ -6,33 +6,41 @@
 #    By: mmoussou <mmoussou@student.42angouleme.fr  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/22 07:21:18 by mmoussou          #+#    #+#              #
-#    Updated: 2024/01/22 12:59:34 by mmoussou         ###   ########.fr        #
+#    Updated: 2024/01/23 15:44:13 by mmoussou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+CC = gcc
 
 LIBFT = ./libft/libft.a
 
 LIBFT_INCLUDE = ./libft/include
+
+CFLAGS = -Wall -Werror -Wextra
+
+INCLUDE = ./include
 
 all: server client
 
 bonus: all
 
 $(LIBFT):
-	make -C libft
+	@make -C libft
 
 server: $(LIBFT)
-	gcc -Wall -Wextra -Werror s_src/main.c $(LIBFT) -Iinclude -I$(LIBFT_INCLUDE) -o server -g
+	@$(CC) $(CFLAGS) s_src/main.c $(LIBFT) -I$(INCLUDE) -I$(LIBFT_INCLUDE) -o server
 
 client: $(LIBFT)
-	gcc -Wall -Wextra -Werror c_src/main.c $(LIBFT) -Iinclude -I$(LIBFT_INCLUDE) -o client -g
+	@$(CC) $(CFLAGS) c_src/main.c $(LIBFT) -I$(INCLUDE) -I$(LIBFT_INCLUDE) -o client
 
 clean:
-	make -C libft clean
+	@make -C libft clean
 
 fclean:
-	make -C libft fclean
-	rm -rf client
-	rm -rf server
+	@make -C libft fclean
+	@rm -rf client
+	@rm -rf server
 
 re: fclean all
+
+.PHONY: all bonus server client clean fclean re
