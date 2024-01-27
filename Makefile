@@ -6,41 +6,75 @@
 #    By: mmoussou <mmoussou@student.42angouleme.fr  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/22 07:21:18 by mmoussou          #+#    #+#              #
-#    Updated: 2024/01/23 15:44:13 by mmoussou         ###   ########.fr        #
+#    Updated: 2024/01/23 19:22:46 by mmoussou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+SHELL = bash
+
 CC = gcc
 
-LIBFT = ./libft/libft.a
+LIBFT_DIR = libft
 
-LIBFT_INCLUDE = ./libft/include
+LIBFT = $(LIBFT_DIR)/libft.a
+
+LIBFT_INCLUDE = $(LIBFT_DIR)/include
 
 CFLAGS = -Wall -Werror -Wextra
 
-INCLUDE = ./include
+INCLUDE = include
 
-all: server client
+C_NAME = client
 
-bonus: all
+C_SRC = c_src/main.c
 
-$(LIBFT):
-	@make -C libft
+S_NAME = server
 
-server: $(LIBFT)
-	@$(CC) $(CFLAGS) s_src/main.c $(LIBFT) -I$(INCLUDE) -I$(LIBFT_INCLUDE) -o server
+S_SRC = s_src/main.c
 
-client: $(LIBFT)
-	@$(CC) $(CFLAGS) c_src/main.c $(LIBFT) -I$(INCLUDE) -I$(LIBFT_INCLUDE) -o client
+define MINITALK_BANNER
+\x1B[0;35m
+
+salut
+
+\x1B[0m
+endef
+
+export MINITALK_BANNER
+
+all: banner $(S_NAME) $(C_NAME)
+
+banner:
+	@printf "\x1B[2J\x1B[H"
+	@printf "$$MINITALK_BANNER"
+
+$(LIBFT_DIR):
+	@git clone https://github.com/y-syo/libft $(LIBFT_DIR)
+	@printf " \x1B[1;34m[  ]\x1B[0m Cloned Libft.\n"
+
+$(LIBFT): $(LIBFT_DIR)
+	@make --silent -C $(LIBFT_DIR)
+
+$(C_NAME): $(LIBFT)
+	@printf " \x1B[1;36m[ 󱉟 ]\x1B[0m Compiling Client..."
+	@$(CC) $(CFLAGS) $(C_SRC) $(LIBFT) -I$(INCLUDE) -I$(LIBFT_INCLUDE) -o $(C_NAME)
+	@printf "\x1B[2K\r \x1B[1;36m[ 󱉟 ]\x1B[0m Client Compiled.\n"
+
+$(S_NAME): $(LIBFT)
+	@printf " \x1B[1;35m[ 󱉟 ]\x1B[0m Compiling Server..."
+	@$(CC) $(CFLAGS) $(S_SRC) $(LIBFT) -I$(INCLUDE) -I$(LIBFT_INCLUDE) -o $(S_NAME)
+	@printf "\x1B[2K\r \x1B[1;35m[ 󱉟 ]\x1B[0m Server Compiled.\n"
 
 clean:
-	@make -C libft clean
+	@make --silent -C $(LIBFT_DIR) clean
 
 fclean:
-	@make -C libft fclean
-	@rm -rf client
-	@rm -rf server
+	@make --silent -C $(LIBFT_DIR) fclean
+	@rm -f $(S_NAME)
+	@printf " \x1B[1;31m[  ]\x1B[0m Deleted Server.\n"
+	@rm -f $(C_NAME)
+	@printf " \x1B[1;31m[  ]\x1B[0m Deleted Client.\n"
 
-re: fclean all
+re: banner fclean $(S_NAME) $(C_NAME)
 
-.PHONY: all bonus server client clean fclean re
+.PHONY: all banner server clean fclean re
