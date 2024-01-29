@@ -6,7 +6,7 @@
 /*   By: mmoussou <mmoussou@student.42angouleme.fr  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 08:10:51 by mmoussou          #+#    #+#             */
-/*   Updated: 2024/01/22 13:01:40 by mmoussou         ###   ########.fr       */
+/*   Updated: 2024/01/30 00:49:05 by mmoussou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	send_char(char c, int pid)
 {
 	int	i;
 
+	g_uwu_g = 1;
 	i = 0;
 	while (i < 8)
 	{
@@ -44,11 +45,11 @@ void	send_char(char c, int pid)
 	}
 }
 
-void	ft_exit(int signum)
+void	ft_sig(int signum)
 {
-	if (signum == SIGUSR1)
+	if (signum == SIGUSR2)
 	{
-		ft_printf("uwu :3");
+		ft_printf("Message sent ! uwu :3\n");
 		g_uwu_g = 0;
 	}
 }
@@ -58,8 +59,8 @@ int	main(int argc, char **argv)
 	int		pid;
 	int		i;
 
-	g_uwu_g = 17;
-	signal(SIGUSR1, ft_exit);
+	g_uwu_g = 69;
+	signal(SIGUSR2, ft_sig);
 	if (argc != 3)
 		return (-1);
 	if (check_pid(argv[1]))
@@ -70,6 +71,7 @@ int	main(int argc, char **argv)
 	while (argv[2][i])
 	{
 		send_char(argv[2][i], pid);
+		usleep(150);
 		i++;
 	}
 	send_char(0, pid);

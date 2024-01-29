@@ -6,7 +6,7 @@
 /*   By: mmoussou <mmoussou@student.42angouleme.fr  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 07:25:00 by mmoussou          #+#    #+#             */
-/*   Updated: 2024/01/22 13:03:05 by mmoussou         ###   ########.fr       */
+/*   Updated: 2024/01/30 00:45:47 by mmoussou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	print(int signum, siginfo_t *info, void *context)
 		if (!((g_c.c << 1) + (signum == SIGUSR2)))
 		{
 			ft_printf("\n");
-			kill(info->si_pid, SIGUSR1);
+			kill(info->si_pid, SIGUSR2);
 		}
 		else
 			ft_printf("%c", (g_c.c << 1) + (signum == SIGUSR2));
