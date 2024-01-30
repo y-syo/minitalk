@@ -6,7 +6,7 @@
 /*   By: mmoussou <mmoussou@student.42angouleme.fr  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 23:06:24 by mmoussou          #+#    #+#             */
-/*   Updated: 2024/01/18 01:05:04 by mmoussou         ###   ########.fr       */
+/*   Updated: 2024/01/30 01:06:40 by mmoussou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdarg.h>
+
+/* INT */
+
+int			ft_min(int a, int b);
+int			ft_max(int a, int b);
 
 /* CHAR */
 
