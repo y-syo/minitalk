@@ -6,13 +6,13 @@
 /*   By: mmoussou <mmoussou@student.42angouleme.fr  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 08:10:51 by mmoussou          #+#    #+#             */
-/*   Updated: 2024/01/30 00:49:05 by mmoussou         ###   ########.fr       */
+/*   Updated: 2024/03/16 11:15:33 by mmoussou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-static char	g_uwu_g;
+static char	g_status;
 
 int	check_pid(const char *str)
 {
@@ -32,7 +32,7 @@ void	send_char(char c, int pid)
 {
 	int	i;
 
-	g_uwu_g = 1;
+	g_status = 1;
 	i = 0;
 	while (i < 8)
 	{
@@ -50,7 +50,7 @@ void	ft_sig(int signum)
 	if (signum == SIGUSR2)
 	{
 		ft_printf("Message sent ! uwu :3\n");
-		g_uwu_g = 0;
+		g_status = 0;
 	}
 }
 
@@ -59,7 +59,7 @@ int	main(int argc, char **argv)
 	int		pid;
 	int		i;
 
-	g_uwu_g = 69;
+	g_status = 69;
 	signal(SIGUSR2, ft_sig);
 	if (argc != 3)
 		return (-1);
@@ -75,6 +75,6 @@ int	main(int argc, char **argv)
 		i++;
 	}
 	send_char(0, pid);
-	while (g_uwu_g)
+	while (g_status)
 		;
 }
